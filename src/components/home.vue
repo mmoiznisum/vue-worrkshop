@@ -4,6 +4,16 @@
     <!-- <div class="progress progress-striped active col" v-if="isLoading">
       <div class="progress-bar" style="width: 50%"></div>
     </div> -->
+    <ul class="list-group mb-3">
+      <li
+        v-for="cart in carts"
+        :key="cart._id"
+        class="list-group-item d-flex justify-content-between align-items-center"
+      >
+        {{ cart.menuname }}
+        <span class="badge bg-primary rounded-pill">1</span>
+      </li>
+    </ul>
     <div class="row align-center" v-if="!hasError">
       <div
         class="card ml-3 mb-3 col-md-3 col-lg-3 "
@@ -25,7 +35,11 @@
           >
             Detail
           </button>
-          <button type="button" class="btn btn-outline-warning">
+          <button
+            type="button"
+            @click="addToCart(data)"
+            class="btn btn-outline-warning"
+          >
             Add to Cart
           </button>
         </div>
@@ -39,15 +53,17 @@
 
 <script>
 import { getRandomNumbers } from "../utils/utils";
+import { mapState } from "vuex";
+
 export default {
   name: "home",
   data() {
     return {
-      title: "Home",
+      title: "Available Foods!",
       restaurants: [],
       getRandomNumbers,
       hasError: false,
-      isLoading: true
+      isLoading: true,
     };
   },
   methods: {
@@ -69,15 +85,37 @@ export default {
   },
   created() {
     this.$store.dispatch("getFoods");
-    //this.getData();
+    // this.getData();
+  },
+  methods: {
+    itemAlreadyInCart(product) {
+      let inCart = false;
+      this.carts.forEach(item => {
+        if (item._id == product._id) {
+          inCart = true;
+        }
+      });
+      return inCart;
+    },
+    addToCart(product) {
+      if (!this.itemAlreadyInCart(product)) {
+        this.$store.commit("ADD_CART_ITEM", product);
+      } else {
+        alert("Item already added to Cart");
+      }
+    }
   },
   computed: {
     foods() {
       return this.$store.state.foods;
     },
-    carts() {
-      return this.$store.getters.getCarts;
-    },
+    ...mapState({
+      carts: state => state.cart
+    }),
+    // TODO: you can get carts from this as well
+    // carts() {
+    //   return this.$store.getters.getCarts;
+    // }
   },
   getRandomNumbers
 };
