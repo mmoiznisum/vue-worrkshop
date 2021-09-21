@@ -5,6 +5,7 @@
       <div class="progress-bar" style="width: 50%"></div>
     </div> -->
     <ul class="list-group mb-3">
+      <h3 v-if="carts.length !== 0">Added Items</h3>
       <li
         v-for="cart in carts"
         :key="cart._id"
