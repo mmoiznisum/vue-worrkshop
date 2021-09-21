@@ -4,8 +4,8 @@
     <div class="progress progress-striped active col" v-if="isLoading">
       <div class="progress-bar" style="width: 50%"></div>
     </div>
-    <div class="row" v-if="!hasError">
-      <div class="card mb-3 col-md-4 col-lg-4" v-for="data in restaurants" :key="data._id">
+    <div class="row align-center" v-if="!hasError">
+      <div class="card ml-3 mb-3 col-md-3 col-lg-3 " v-for="data in restaurants" :key="data._id">
         <h3 class="card-header">{{ data.menuname }}</h3>
          <img :src="data.images[getRandomNumbers()]" class="img-fluid" />
         <div class="card-body">
@@ -69,5 +69,8 @@ export default {
 }
 .row h3 {
   cursor: pointer;
+}
+.align-center{
+  justify-content: center;
 }
 </style>
