@@ -1,21 +1,33 @@
 <template>
   <div class="home">
     <h1>{{ title }}</h1>
-    <div class="progress progress-striped active col" v-if="isLoading">
+    <!-- <div class="progress progress-striped active col" v-if="isLoading">
       <div class="progress-bar" style="width: 50%"></div>
-    </div>
+    </div> -->
     <div class="row align-center" v-if="!hasError">
-      <div class="card ml-3 mb-3 col-md-3 col-lg-3 " v-for="data in restaurants" :key="data._id">
+      <div
+        class="card ml-3 mb-3 col-md-3 col-lg-3 "
+        v-for="data in foods"
+        :key="data._id"
+      >
         <h3 class="card-header">{{ data.menuname }}</h3>
-         <img :src="data.images[getRandomNumbers()]" class="img-fluid" />
+        <img :src="data.images[getRandomNumbers()]" class="img-fluid" />
         <div class="card-body">
           <p class="card-text">
-            {{data.description}}
+            {{ data.description }}
           </p>
         </div>
         <div class="card-body">
-          <button @click="goTodetail(data._id)" type="button" class="btn btn-primary">Detail</button>
-          <button type="button" class="btn btn-outline-warning">Add to Cart</button>
+          <button
+            @click="goTodetail(data._id)"
+            type="button"
+            class="btn btn-primary"
+          >
+            Detail
+          </button>
+          <button type="button" class="btn btn-outline-warning">
+            Add to Cart
+          </button>
         </div>
       </div>
     </div>
@@ -42,6 +54,7 @@ export default {
     goTodetail(prodId) {
       this.$router.push({ name: "details", params: { Pid: prodId } });
     },
+    // TODO: Unused methods; b/c currently exposing it from store
     async getData() {
       try {
         const response = await this.$http.get(
@@ -55,7 +68,16 @@ export default {
     }
   },
   created() {
-    this.getData();
+    this.$store.dispatch("getFoods");
+    //this.getData();
+  },
+  computed: {
+    foods() {
+      return this.$store.state.foods;
+    },
+    carts() {
+      return this.$store.getters.getCarts;
+    },
   },
   getRandomNumbers
 };
@@ -70,7 +92,7 @@ export default {
 .row h3 {
   cursor: pointer;
 }
-.align-center{
+.align-center {
   justify-content: center;
 }
 </style>
