@@ -2,10 +2,14 @@
   <div class="details">
     <div class="container">
       <div class="row">
-        <div class="col-md-12" v-if="!hasError">
-          <h1>{{ item.menuname }}</h1>
-          <p>{{ item.description }}</p>
-          <img :src="item.images[getRandomNumbers()]" class="img-fluid" />
+        <div class="card col-md-6" v-if="!hasError">
+        <h3 class="card-header">{{item.menuname}}</h3>
+         <img :src="item.images[getRandomNumbers()]" class="img-fluid" />
+        <div class="card-body">
+          <p class="card-text">
+            {{item.description}}
+          </p>
+        </div>
         </div>
         <div class="col-md-12" v-else>
           <p>Something went wrong...!</p>
@@ -15,6 +19,7 @@
   </div>
 </template>
 <script>
+
 import { getRandomNumbers } from "../utils/utils";
 export default {
   name: "details",

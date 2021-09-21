@@ -5,9 +5,18 @@
       <div class="progress-bar" style="width: 50%"></div>
     </div>
     <div class="row" v-if="!hasError">
-      <div class="col-md-4 col-lg4" v-for="data in restaurants" :key="data._id">
-        <img :src="data.images[getRandomNumbers()]" class="img-fluid" />
-        <h3 @click="goTodetail(data._id)">{{ data.menuname }}</h3>
+      <div class="card mb-3 col-md-4 col-lg-4" v-for="data in restaurants" :key="data._id">
+        <h3 class="card-header">{{ data.menuname }}</h3>
+         <img :src="data.images[getRandomNumbers()]" class="img-fluid" />
+        <div class="card-body">
+          <p class="card-text">
+            {{data.description}}
+          </p>
+        </div>
+        <div class="card-body">
+          <button @click="goTodetail(data._id)" type="button" class="btn btn-primary">Detail</button>
+          <button type="button" class="btn btn-outline-warning">Add to Cart</button>
+        </div>
       </div>
     </div>
     <div v-else>
