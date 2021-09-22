@@ -13,7 +13,9 @@
       >
         {{ cart.menuname }}
         <span class="badge bg-primary rounded-pill">{{ cart.quantity }}</span>
-        <span class="badge rounded-pill bg-danger"  @click="removeItem(cart)">X</span>
+        <span class="badge rounded-pill bg-danger" @click="removeItem(cart)"
+          >X</span
+        >
       </li>
     </ul>
     <div class="row align-center" v-if="!hasError">
@@ -35,7 +37,7 @@
             type="button"
             class="btn btn-primary"
           >
-            Detail
+            View
           </button>
           <button
             type="button"
@@ -65,8 +67,12 @@ export default {
       restaurants: [],
       getRandomNumbers,
       hasError: false,
-      isLoading: true,
+      isLoading: true
     };
+  },
+  created() {
+    this.$store.dispatch("getFoods");
+    // this.getData();
   },
   methods: {
     goTodetail(prodId) {
@@ -83,13 +89,7 @@ export default {
         this.hasError = true;
       }
       this.isLoading = false;
-    }
-  },
-  created() {
-    this.$store.dispatch("getFoods");
-    // this.getData();
-  },
-  methods: {
+    },
     itemAlreadyInCart(product) {
       let inCart = false;
       this.carts.forEach(item => {
@@ -107,8 +107,8 @@ export default {
         //alert("Item already added to Cart");
       }
     },
-    removeItem(product){
-        this.$store.commit("REMOVE_CART_ITEM", product);
+    removeItem(product) {
+      this.$store.commit("REMOVE_CART_ITEM", product);
     }
   },
   computed: {
@@ -117,7 +117,7 @@ export default {
     },
     ...mapState({
       carts: state => state.cart
-    }),
+    })
     // TODO: you can get carts from this as well
     // carts() {
     //   return this.$store.getters.getCarts;
