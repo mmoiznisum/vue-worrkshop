@@ -13,6 +13,7 @@
       >
         {{ cart.menuname }}
         <span class="badge bg-primary rounded-pill">1</span>
+        <span class="badge rounded-pill bg-danger"  @click="removeItem(cart)">X</span>
       </li>
     </ul>
     <div class="row align-center" v-if="!hasError">
@@ -104,6 +105,9 @@ export default {
       } else {
         alert("Item already added to Cart");
       }
+    },
+    removeItem(product){
+        this.$store.commit("REMOVE_CART_ITEM", product);
     }
   },
   computed: {
