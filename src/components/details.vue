@@ -12,7 +12,7 @@
         </div>
         </div>
         <div class="col-md-12" v-else>
-          <p>Something went wrong...!</p>
+          <p>Something went wrong............!</p>
         </div>
       </div>
     </div>
